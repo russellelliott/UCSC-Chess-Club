@@ -21,9 +21,11 @@ export default async function handler(req, res) {
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
+      const existingData = querySnapshot.docs.map(doc => doc.data());
       return res.status(200).json({ 
         message: `Tournament info for ${season} ${year} already exists.`,
-        exists: true 
+        exists: true,
+        savedData: existingData
       });
     }
 

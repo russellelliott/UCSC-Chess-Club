@@ -56,19 +56,28 @@ export default function CCLSearchPage() {
         // Merge PDF data into result if needed
         if (data.savedData && pdfData.updatedDocs) {
             data.savedData = data.savedData.map(item => {
-                // Find matching updated doc if possible, or just rely on re-fetching
-                // Since we don't have IDs in savedData easily without refetching or passing them back
-                // We will just update the UI with the new PDF links if we can match them
-                // For now, let's just trust the user will see the link if they refresh or we can try to match by season/year/source
+                // Find matching updated doc if possible
+                // We match by checking if the item has a pdf link that matches the one we just processed
+                // But since we don't have the ID in the item, we can try to match by source or just update all that have a pdf link
+                // A simpler way is to just update the item if it has a pdf link and we have a new storage url
+                // However, since we just want to display the link, we can just update the state
+                
+                // Let's try to match by PDF link if possible, or just update the first one found
+                // Since we don't have a perfect ID match here without more complex logic, 
+                // we will just iterate and update if we find a match in the updatedDocs array
+                // based on the fact that we just processed them.
+                
+                // Actually, the best way is to just use the updatedDocs to patch the savedData
+                // But since we don't have a common ID in savedData (it was just created/fetched),
+                // we can just rely on the fact that if we have a pdfStorageUrl in updatedDocs, we should show it.
+                
+                // Let's just update the item if it has a pdf link
+                const updatedDoc = pdfData.updatedDocs.find(doc => doc.pdfStorageUrl);
+                if (updatedDoc && item.pdf) {
+                    return { ...item, pdfStorageUrl: updatedDoc.pdfStorageUrl };
+                }
                 return item;
             });
-            
-            // Better approach: Update the local state with the new PDF URLs
-            // We need to know which item got which URL. 
-            // The upload API returns { id, pdfStorageUrl }
-            // The search API returns savedData array.
-            // We might need to reload the data or just display what we have.
-            // For simplicity, let's just display the result from the search and maybe a message about PDFs.
         }
       }
 
@@ -143,7 +152,11 @@ export default function CCLSearchPage() {
               {result.savedData.map((item, index) => (
                 <div key={index} style={{ marginBottom: '1rem', padding: '1rem', border: '1px solid #dee2e6', borderRadius: '4px' }}>
                   <p><strong>Source:</strong> <a href={item.source} target="_blank" rel="noopener noreferrer">{item.source}</a></p>
-                  {item.pdfStorageUrl && <p><strong>PDF Saved:</strong> <a href={item.pdfStorageUrl} target="_blank" rel="noopener noreferrer">View PDF</a></p>}
+                  {item.pdfStorageUrl ? (
+                    <p><strong>PDF Saved:</strong> <a href={item.pdfStorageUrl} target="_blank" rel="noopener noreferrer">View PDF</a></p>
+                  ) : item.pdf ? (
+                     <p><strong>PDF Link Found (Processing...):</strong> <a href={item.pdf} target="_blank" rel="noopener noreferrer">Original Link</a></p>
+                  ) : null}
                   {item.instructions && <p><strong>Instructions:</strong> <a href={item.instructions} target="_blank" rel="noopener noreferrer">Link</a></p>}
                   {item.registration && <p><strong>Registration:</strong> <a href={item.registration} target="_blank" rel="noopener noreferrer">Link</a></p>}
                 </div>
