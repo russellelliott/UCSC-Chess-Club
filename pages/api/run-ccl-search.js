@@ -109,41 +109,12 @@ export default async function handler(req, res) {
     const savedData = [];
 
     for (const result of results) {
-      let pdfStorageUrl = '';
-      
-      if (result.pdf[0]) {
-        try {
-          const pdfLink = result.pdf[0];
-          const driveIdMatch = pdfLink.match(/\/d\/(.+?)\//);
-          
-          if (driveIdMatch && driveIdMatch[1]) {
-            const fileId = driveIdMatch[1];
-            const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
-            
-            const pdfResponse = await fetch(downloadUrl);
-            if (pdfResponse.ok) {
-                const pdfArrayBuffer = await pdfResponse.arrayBuffer();
-                const pdfUint8Array = new Uint8Array(pdfArrayBuffer);
-
-                const fileName = `ccl/${season}/${year}/${Date.now()}_ccl_${season}_${year}.pdf`;
-                const storageRef = ref(storage, fileName);
-                
-                // Upload
-                await uploadBytes(storageRef, pdfUint8Array, { contentType: 'application/pdf' });
-                pdfStorageUrl = await getDownloadURL(storageRef);
-            }
-          }
-        } catch (e) {
-          console.error("Error uploading PDF:", e);
-        }
-      }
-
       const tournamentData = {
         season: season,
         year: year,
         source: result.url,
         pdf: result.pdf[0] || '',
-        pdfStorageUrl: pdfStorageUrl,
+        pdfStorageUrl: '', // Will be populated by the second API call
         instructions: result.instructions[0] || '',
         registration: result.registration[0] || '',
         fairPlay: result.fairPlay[0] || '',
