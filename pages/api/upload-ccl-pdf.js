@@ -62,7 +62,7 @@ export default async function handler(req, res) {
           console.error("Error processing PDF:", e);
         }
       } else if (data.pdfStorageUrl) {
-          updatedDocs.push({ id: document.id, pdfStorageUrl: data.pdfStorageUrl, message: 'Already exists' });
+          updatedDocs.push({ id: document.id, pdfStorageUrl: data.pdfStorageUrl, message: 'Already exists', exists: true });
       }
     }
 

@@ -9,10 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@langchain/community": "^1.1.1",
+    "@langchain/core": "^1.1.8",
+    "@langchain/openai": "^1.2.0",
     "axios": "^1.13.2",
     "cheerio": "^1.1.2",
     "firebase": "^12.7.0",
+    "langchain": "^1.2.3",
     "next": "16.1.1",
+    "pdf-parse": "^1.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-toastify": "^11.0.5"
