@@ -209,7 +209,7 @@ export default function CCLSearchPage() {
             disabled={extractStatus === 'loading'} 
             style={buttonStyle}
         >
-          {extractStatus === 'loading' ? 'Extracting...' : 'Extract Info'}
+          {extractStatus === 'loading' ? 'Extracting...' : extractStatus === 'success' ? 'Extract Again' : 'Extract Info'}
         </button>
         {extractData && (
             <div style={resultStyle}>

@@ -55,7 +55,8 @@ The JSON object must have the following structure:
     "logistics": [
         {"title": "Registration Opens", "date": "YYYY-MM-DD HH:MM AM/PM PT"},
         {"title": "Registration Closes", "date": "YYYY-MM-DD HH:MM AM/PM PT"},
-        {"title": "Schedule Release", "date": "YYYY-MM-DD HH:MM AM/PM PT"}
+        {"title": "Schedule Release", "date": "YYYY-MM-DD HH:MM AM/PM PT"},
+        {"title": "Roster Lock", "date": "YYYY-MM-DD HH:MM AM/PM PT"}
     ],
     "regular_season": [
         {"title": "Regular Season Round 1", "date": "YYYY-MM-DD HH:MM AM/PM PT"},
@@ -82,10 +83,10 @@ The JSON object must have the following structure:
         "minimum_games": <numeric_value>
     }
 }
-
 Specific Instructions:
 1. Dates should be formatted as "YYYY-MM-DD HH:MM AM/PM PT".
-2. For "logistics", find the dates for registration open, close, and schedule release.
+2. For "logistics", find the dates for registration open, close, schedule release, and roster locking.
+3. For "regular_season", list all events in the 'schedule' section. Note the time of day for group A teams (PT).
 3. For "regular_season", list all events in the 'schedule' section. Note the time of day for group A teams (PT).
 4. For "divisions", extract the playoff schedules.
    - Division 1 rounds: Quarterfinals, Semifinals, 3rd Place/Final.
