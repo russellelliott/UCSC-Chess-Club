@@ -160,7 +160,7 @@ export default function CCLSearchPage() {
         </button>
         {searchData && (
             <div style={resultStyle}>
-                <p><strong>Status:</strong> {searchData.exists ? 'Found existing' : 'New data saved'}</p>
+                <p><strong>Status:</strong> {searchData.exists ? <span style={{color: 'green'}}>(already exists)</span> : 'New data saved'}</p>
                 {searchData.savedData && searchData.savedData.map((item, i) => (
                     <div key={i} style={{marginBottom: '5px'}}>
                         <a href={item.source} target="_blank" rel="noreferrer">Source Link</a>
@@ -188,10 +188,10 @@ export default function CCLSearchPage() {
             <div style={resultStyle}>
                 {uploadData.updatedDocs.map((doc, i) => (
                     <div key={i}>
+                        <p><strong>Status:</strong> {doc.exists ? <span style={{color: 'green'}}>(already exists)</span> : 'New PDF uploaded'}</p>
                         {doc.pdfStorageUrl ? (
                             <a href={doc.pdfStorageUrl} target="_blank" rel="noreferrer">View PDF</a>
                         ) : 'No PDF URL'}
-                        {doc.exists && <span style={{marginLeft: '10px', color: 'green'}}>(Already Existed)</span>}
                     </div>
                 ))}
             </div>
