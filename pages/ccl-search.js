@@ -159,6 +159,7 @@ export default function CCLSearchPage() {
                   ) : null}
                   {item.instructions && <p><strong>Instructions:</strong> <a href={item.instructions} target="_blank" rel="noopener noreferrer">Link</a></p>}
                   {item.registration && <p><strong>Registration:</strong> <a href={item.registration} target="_blank" rel="noopener noreferrer">Link</a></p>}
+                  {item.fairPlay && <p><strong>Fair Play:</strong> <a href={item.fairPlay} target="_blank" rel="noopener noreferrer">Link</a></p>}
                 </div>
               ))}
             </div>
